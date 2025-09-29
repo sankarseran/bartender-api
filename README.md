@@ -58,5 +58,7 @@ Once the server is running, Swagger UI is available here [http://localhost:3000/
 ### 3. Drink Preparation Time and Avilable Bartender
 - Default drink preparation time 5 seconds and bartender is count is 1.
 - Configurable via environment variable `PREP_TIME` (in seconds) and `BARTENDERS` in number
+
   ```bash
   PREP_TIME=10 BARTENDERS=2 npm run dev
+  ```
