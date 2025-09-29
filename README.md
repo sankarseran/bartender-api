@@ -56,7 +56,7 @@ Once the server is running, Swagger UI is available here [http://localhost:3000/
   - Maximum 2 beers at the same time or 1 non-beer drink at the same time (across all customers). orders exceeding these limits are rejected immediately.
 
 ### 3. Drink Preparation Time and Bartender
-- Default drink preparation time 5 seconds.
-- Configurable via environment variable `PREP_TIME` (in seconds)
+- Default drink preparation time 5 seconds and bartender is count is 1.
+- Configurable via environment variable `PREP_TIME` (in seconds) and `BARTENDERS` in number
   ```bash
-  PREP_TIME=10 npm run dev
+  PREP_TIME=10 BARTENDERS=2 npm run dev
