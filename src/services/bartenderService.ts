@@ -1,4 +1,9 @@
-import { DrinkType, OrderStatus, type IOrderRepository, type Order } from "../model.js";
+import {
+  DrinkType,
+  OrderStatus,
+  type IOrderRepository,
+  type Order,
+} from "../model.js";
 
 export class BartenderService {
   constructor(
@@ -8,15 +13,17 @@ export class BartenderService {
   ) {}
 
   canAcceptOrder(drinkType: DrinkType): boolean {
-    const activeOrders = this.repo.getAllOrders().filter(o => o.status === OrderStatus.PREPARING);
+    const activeOrders = this.repo.getOrdersByFilter({
+      status: OrderStatus.PREPARING,
+    });
 
-    if (drinkType === DrinkType.BEER) {
-      const activeBeers = activeOrders.filter(o => o.drinkType === DrinkType.BEER).length;
-      return activeBeers < (this.bartenders * 2);
-    } else {
-      const activeNonBeers = activeOrders.filter(o => o.drinkType !== DrinkType.BEER).length;
-      return activeNonBeers < this.bartenders;
-    }
+    const totalUsedSlots = activeOrders.reduce((sum, order) => {
+      return sum + (order.drinkType === DrinkType.BEER ? 0.5 : 1);
+    }, 0);
+
+    const neededSlots = drinkType === DrinkType.BEER ? 0.5 : 1;
+
+    return totalUsedSlots + neededSlots <= this.bartenders;
   }
 
   placeOrder(order: Order): boolean {
@@ -29,12 +36,18 @@ export class BartenderService {
     order.startedAt = Date.now();
     this.repo.addOrder(order);
 
-    setTimeout(() => {
-      order.status = OrderStatus.SERVED;
-      order.completedAt = Date.now();
-    }, this.prepTime);
+    this.completeOrder(order);
 
     return true;
+  }
+
+  private completeOrder(order: Order) {
+    setTimeout(() => {
+      this.repo.updateOrder(order.customerId, {
+        status: OrderStatus.SERVED,
+        completedAt: Date.now(),
+      })
+    }, this.prepTime);
   }
 
   getStatus() {

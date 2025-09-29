@@ -7,7 +7,7 @@ export class OrderController {
 
   placeOrder(req: Request, res: Response) {
     const { customerId, drinkType } = req.body as { customerId: string; drinkType: DrinkType };
-    const order: Order = { customerId, drinkType, status: OrderStatus.PREPARING };
+    const order: Order = { customerId: customerId.toLowerCase(), drinkType, status: OrderStatus.PREPARING };
     if (!this.bartender.placeOrder(order)) {
       return res.status(429).json({ error: "Bartender at capacity or duplicate order" });
     }

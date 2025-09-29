@@ -4,6 +4,7 @@ export interface IOrderRepository {
   getAllOrders(): Order[];
   getOrdersByFilter(filter: OrderFilter): Order[];
   getUniqueCustomers(): string[];
+  updateOrder(customerId: string, updatedFields: Partial<Order>): boolean;
 }
 
 export interface OrderFilter {

@@ -27,4 +27,12 @@ getOrdersByFilter(filter: OrderFilter): Order[] {
   getUniqueCustomers(): string[] {
     return [...new Set(this.orders.map(o => o.customerId))];
   }
+
+  updateOrder(customerId: string, updatedFields: Partial<Order>): boolean {
+    const order = this.orders.find(o => o.customerId === customerId);
+    if (!order) return false;
+
+    Object.assign(order, updatedFields);
+    return true;
+  }
 }
