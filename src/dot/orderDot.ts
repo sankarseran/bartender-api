@@ -11,14 +11,14 @@ export class InMemoryOrderRepository implements IOrderRepository {
     return this.orders.find(o => o.customerId === key);
   }
 
-  getOrdersByCondition(filterVal: OrderFilter): Order[] {
-    return this.orders.filter(
-      o =>
-        o.customerId === filterVal.customerId &&
-        o.status === filterVal.status &&
-        o.drinkType === filterVal.drinkType
-    );
-  }
+getOrdersByFilter(filter: OrderFilter): Order[] {
+  return this.orders.filter(o => {
+    if (filter.customerId && o.customerId !== filter.customerId) return false;
+    if (filter.status && o.status !== filter.status) return false;
+    if (filter.drinkType && o.drinkType !== filter.drinkType) return false;
+    return true;
+  });
+}
 
   getAllOrders(): Order[] {
     return this.orders;

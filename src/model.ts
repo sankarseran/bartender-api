@@ -2,7 +2,7 @@ export interface IOrderRepository {
   addOrder(order: Order): void;
   getOrder(key: string): Order | undefined;
   getAllOrders(): Order[];
-  getOrdersByCondition(filter: OrderFilter): Order[];
+  getOrdersByFilter(filter: OrderFilter): Order[];
   getUniqueCustomers(): string[];
 }
 

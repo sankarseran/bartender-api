@@ -20,7 +20,7 @@ export class BartenderService {
   }
 
   placeOrder(order: Order): boolean {
-    const isOrderExists = this.repo.getOrdersByCondition(order)?.length;
+    const isOrderExists = this.repo.getOrdersByFilter(order)?.length;
 
     if (isOrderExists || !this.canAcceptOrder(order.drinkType)) {
       return false;
