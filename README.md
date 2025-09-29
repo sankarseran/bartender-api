@@ -7,7 +7,7 @@ A simple Node.js + TypeScript HTTP API that simulates a bartender serving drinks
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/bartender-api.git
+git clone https://github.com/sankarseran/bartender-api.git
 cd bartender-api
 ```
 
